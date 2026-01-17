@@ -1,4 +1,5 @@
-name: Build and deploy
+name: Build and Deploy Hugo site
+
 on:
   push:
     branches:
@@ -18,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v6
         with:
           submodules: recursive
@@ -41,6 +42,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
