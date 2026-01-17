@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on yiπng</title>
+    <link>http://localhost:1313/tags/notes/</link>
+    <description>Recent content in Notes on yiπng</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 17 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pivot</title>
+      <link>http://localhost:1313/posts/notes1/</link>
+      <pubDate>Sat, 17 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/notes1/</guid>
+      <description>&lt;p&gt;最近嘗試弄自己的網站，主要是想有個地方記錄一下東西，為了讓自己的網站不會空空的，我把以前在 hackmd 上面的學習筆記還有一些 CTF 的 write up 搬過來，順便潤一下以前的文章。&lt;/p&gt;&#xA;&lt;p&gt;這幾年的變化真的很大，雖然很多人都說生成式 AI 改變了人類的生活方式，我也認同，但我也只是認同，並沒有深刻的體悟到這個改變的程度，直到這次搬運自己以前的文章，才發現 AI 完全改變了我學習的方式，過去的學習方式都是透過書籍配上 &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;stackoverflow&lt;/a&gt;，現在都是讀一點，丟 AI，問 AI 蠢問題，再讀一點，大部分時候甚至只讀 AI 產出的二手資訊。資訊通膨的時代，不僅在娛樂上追求&lt;strong&gt;速食快樂&lt;/strong&gt;(短影音這類的娛樂方式)，在學習這個領域也在追求&lt;strong&gt;速食知識&lt;/strong&gt;，在這個世代好像沒有辦法慢下來。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;話說我沒那麼愛看短影音，但我挺喜歡看20~30分鐘看完一部電影的那種系列，不過其實這也算是一種速食快樂&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;過去的筆記部分是使用自問自答的方式記錄，其實這就是過去我在學習時的方式，自己問自己問題然後找答案。但現在的我好像沒那麼會問問題了，以前&lt;strong&gt;提問&lt;/strong&gt;和&lt;strong&gt;解答&lt;/strong&gt;的都是我，&lt;strong&gt;都很笨&lt;/strong&gt;，所以我兩個能力可以一起成長，但現在提問的是我，負責回答的是 AI，我即便問得很蠢很不精確，AI 都能回答到我的疑問，導致我的提問能力停滯，對於事件的敏銳度也下降&lt;/p&gt;&#xA;&lt;blockquote class=&#34;quote-box&#34;&gt;&#xD;&#xA;  &lt;p class=&#34;quote-content&#34;&gt;&#xD;&#xA;「 問題的深度，決定世界的廣度，」&#xD;&#xA;&lt;/p&gt;&lt;/blockquote&gt;&#xD;&#xA;&lt;p&gt;其實這個問題也反映在我生活上，只是我一直都不以為意，像是最近為了畢業，讀了不少論文，但大多時候讀完都沒有那種 「&lt;strong&gt;這個實驗合理嗎？&lt;/strong&gt;」、「&lt;strong&gt;假設夠精確嗎？&lt;/strong&gt;」的疑問，比較多的是「&lt;strong&gt;這個想法挺不錯的欸~&lt;/strong&gt;」。目前也沒有特別的想法來提升自己提問的能力/品質，但我猜，透過大量閱讀並刻意對比不同領域與立場的文章，來磨練自己提問的直覺，或許是目前成本最低的方法&lt;/p&gt;&#xA;&lt;p&gt;慶幸在這個晚上隨手整理舊筆記，讓我意識到自己的「小問題」，或許我也會在未來的某個晚上整理這篇隨筆時，意識到我已經完全克服它了&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

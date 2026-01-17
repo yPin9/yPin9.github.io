@@ -1,0 +1,42 @@
+baseurl = "https://yPin9.github.io"
+languageCode = "en"
+title = "yiπng"
+theme = "charaka-hugo-theme"
+disqusShortname = ""
+relativeURLs = true
+preserveTaxonomyNames = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+    [markup.goldmark.extensions]
+      table = true
+      strikethrough = true
+      linkify = true
+[services.googleAnalytics]
+googleAnalytics = ""
+
+[author]
+  name = "ypp"
+  homepage = ""
+
+[params.highlight]
+  style = "zenburn"
+
+[params.share]
+  enabled = "true"
+
+[[params.social]]
+  url = "about"
+  fa_icon = "fas fa-info"
+
+[[params.social]]
+  url = "https://github.com/yPin9"
+  fa_icon = "fab fa-github"
+
+
+[[params.social]]
+  url = "https://x.com/ypp_tw"
+  fa_icon = "fab fa-twitter"

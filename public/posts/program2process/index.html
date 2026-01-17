@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Program to Process | yiπng</title>
+
+<link rel="stylesheet" href="http://localhost:1313//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-minima.css" />
+<script type="text/javascript" src="http://localhost:1313//js/jssocials.js"></script>
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="http://localhost:1313/"><h1 class="title is-3">yiπng</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="http://localhost:1313/about" rel="me">
+                  <span class="icon">
+                    <i class="fas fa-info"></i>
+                  </span>
+                </a>
+              
+                <a href="https://github.com/yPin9" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://x.com/ypp_tw" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">July 17, 2024</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">Program to Process</h1>
+  <div class="content">
+    <h1 id="程式碼撰寫到運行"><strong>程式碼撰寫到運行</strong></h1>
+<blockquote>
+<p>隨手學習筆記，本筆記主要講述從 Program 到 Process 的過程</p>
+</blockquote>
+<h2 id="理解預處理編譯組譯連結載入運行">理解預處理、編譯、組譯、連結、載入、運行</h2>
+<p><img src="https://i.imgur.com/7Wtz8XM.png" alt=""></p>
+<p><a href="https://aben20807.blogspot.com/2018/08/1070824-c.html">圖源</a></p>
+<h3 id="預處理preprocessor"><em>預處理(Preprocessor)</em></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">//test.c 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define it5 5
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>,it5);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>這是大家一定都看得懂的程式碼，那我們的預處理器會對這段程式碼如何呢？它會把所有巨集(Macro)、標頭檔(<em>其實就是所有＃開頭的指令</em>)，都置換掉，置換是什麼意思？</p>
+<blockquote>
+<p>讓我們看實際的過程</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gcc -E -o test.i test.c 
+</span></span><span style="display:flex;"><span>//gcc -E<span style="color:#f92672">(</span>only preprocesee<span style="color:#f92672">)</span> -o<span style="color:#f92672">(</span>assign output filename<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>output filename<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>input filename<span style="color:#f92672">]</span>
+</span></span></code></pre></div><ul>
+<li>gcc 後面的-E 參數代表只要把 source code 進行預處理就可以了</li>
+<li>-o 是指定輸出檔案的名稱，這邊我指定名稱是 test.i</li>
+<li>*<em>.i 是經過預處理後的程式碼的副檔名</em></li>
+</ul>
+<blockquote>
+<p>gcc 是一套強大開源的 Compiler Driver，支援數種語言，在這邊我們可以把它看成一套工具來幫助我們做預處理、編譯、組譯、連結就可以了</p>
+</blockquote>
+<p>gcc還有很多參數可以使用，在網路上都可以輕易的查詢，後面也還會再介紹幾個</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//上略
+</span></span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ctermid</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>__s) <span style="color:#a6e22e">__attribute__</span> ((__nothrow__ , __leaf__));
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 840 &#34;/usr/include</span><span style="color:#75715e">/stdio.h&#34; 3 4</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flockfile</span> (FILE <span style="color:#f92672">*</span>__stream) <span style="color:#a6e22e">__attribute__</span> ((__nothrow__ , __leaf__));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ftrylockfile</span> (FILE <span style="color:#f92672">*</span>__stream) <span style="color:#a6e22e">__attribute__</span> ((__nothrow__ , __leaf__)) ;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">funlockfile</span> (FILE <span style="color:#f92672">*</span>__stream) <span style="color:#a6e22e">__attribute__</span> ((__nothrow__ , __leaf__));
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 858 &#34;/usr/include</span><span style="color:#75715e">/stdio.h&#34; 3 4</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">__uflow</span> (FILE <span style="color:#f92672">*</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">__overflow</span> (FILE <span style="color:#f92672">*</span>, <span style="color:#66d9ef">int</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 873 &#34;/usr/include</span><span style="color:#75715e">/stdio.h&#34; 3 4</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2 &#34;test.c&#34; 2
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2 &#34;test.c&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>){
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Hello,world&#34;</span>);
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>,<span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>這邊我們可以看到 <code>#define it5 5</code> 和 <code>＃inculde&lt;stdio.h&gt;</code> 確實都被取代了。</p>
+<p>這邊置換成我們想要的結果後，卻多出了一些奇怪的數字那這些數字是什麼呢？</p>
+<p>The numbers following the filename are flags:</p>
+<ul>
+<li>This indicates the start of a new file.</li>
+<li>This indicates returning to a file (after having included another file).</li>
+<li>This indicates that the following text comes from a system header file, so certain warnings should be suppressed.</li>
+<li>This indicates that the following text should be treated as being wrapped in an implicit extern &ldquo;C&rdquo; block.</li>
+</ul>
+<p><a href="https://stackoverflow.com/questions/33089168/what-do-the-numbers-mean-in-the-preprocessed-i-files-when-compiling-c-with-gcc">Source</a></p>
+<p>大致理解預處理器到底在幹嘛了，可能心中又會有新的疑問</p>
+<blockquote>
+<p>為什麼不直接 inculde source code　就好，為什麼要創造一個　HeaderFile，然後 Include 所謂的 HeaderFile，這樣感覺有點畫蛇添足*</p>
+</blockquote>
+<p><strong>關於這個問題先來了解標頭檔的意義</strong></p>
+<h3 id="標頭檔的意義">標頭檔的意義</h3>
+<blockquote>
+<p><strong>就算 include 標頭檔，Compiler 在編譯時根本不知道你函數正確的位置 (使用動態連結時)</strong></p>
+</blockquote>
+<p>這邊先打個岔，Binary 可以分成<strong>動態連結</strong>和<strong>靜態連結</strong>，如果是靜態連結那就會在連結的時候把正確位置填入，而動態連結則是運行時填入。
+所以下面的討論都是基於動態連結，畢竟靜態連結沒什麼好說的，就是直接塞入正確位置</p>
+<p>動態連結</p>
+<ul>
+<li>運行時載入正確位置透過GOT,PLT
+<ul>
+<li>Partial RELRO (gcc default)
+<ul>
+<li>Lazy binding(這個會有got hijack的問題)</li>
+</ul>
+</li>
+<li>Full RELRO
+<ul>
+<li>在運行的一開始就解析好所有符號</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>靜態連結</p>
+<ul>
+<li>連結時填入固定位置</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/S1cxcrjpC.png" alt="first_plt_got">
+<img src="https://hackmd.io/_uploads/H1b-5BspR.png" alt="second_got_plt"></p>
+<p>以範例來說 include 標頭檔是為了 <code>printf()</code> 這個函數，但其實我們去 <code>&lt;stdio.h&gt;</code> 裡面查看其實他只有對<code>printf()</code> 進行宣告而已，內部功能其實並沒有在這個檔案裡面，HeaderFile 作為編譯前會先被解析的部份，它(HeadFile)<strong>作為宣告的集合</strong>，是為了讓 Compiler 能認得函數的定義，知道有其函數，Compiler 才會乖乖編譯
+<img src="https://i.imgur.com/xMXxNzH.png" alt=""></p>
+<blockquote>
+<p><em>那這樣為什麼他能夠置卻執行 <code>printf()</code>，是誰告訴程式函數在哪裡?又是什麼時候告訴程式的?</em></p>
+</blockquote>
+<p><strong>其實 Program 填寫正確函數位置要等到連結 (Linking) 時才會真正知道函數正確的位置 ，編譯器其實並不知道外部函數、變數的位置，一切都要靠動態連結器完成。</strong></p>
+<p>這邊再補充一下，其實編譯器是會對 <code>printf()</code> 進行編譯，一般來說呼叫函式的組語是長這樣 <code>call [function address]</code>，<strong>只是 function address 不是填入該函數的正確位置</strong>，而是一些與組語相關的數值(就是GOT、PLT的位置)，連結器則會根據數值和 <u><a href="https://en.wikipedia.org/wiki/Relocation_(computing)">Relocation table</a></u> 依序填入函數或變數的正確位置。</p>
+<blockquote>
+<p><em>既然連結器能夠知道函數和變數的位置，那回到一開始的問題，一樣都是宣告，比起 HeaderFile 我的.c file 還有定義函數行為，為什麼不 <code>include&lt;xxx.c&gt;</code> ，這樣不是更直觀更方便嗎？</em></p>
+</blockquote>
+<p><strong>如果我們直接 <code>include&lt;xxx.c&gt;</code>，那這樣我們當初就沒有分成兩個檔案的必要，我們需要include的原因其一就是希望能讓檔案分離、模組化</strong></p>
+<blockquote>
+<p><strong>延伸閱讀：標頭檔為一個完整的檔案做為插入.c/.cpp 檔案中，一般標頭檔的功能為Declaration(宣告)，而.c/.cpp作為Defined（定義），此做法可以加快編譯速度也可以避免重複宣告，只要include就可以使用。</strong> <a href="https://stackoverflow.com/questions/1305947/why-does-c-need-a-separate-header-file">Why does C++ need a separate header file?</a>
+<a href="https://docs.microsoft.com/zh-tw/cpp/cpp/header-files-cpp?view=msvc-170">How to use</a></p>
+</blockquote>
+<hr>
+<h3 id="編譯compiler"><em>編譯(Compiler)</em></h3>
+<ul>
+<li>詞法分析(lexical analyze)
+<ul>
+<li>經過<em><strong>前處理器</strong></em>處理完的檔案進到 lexer 時，他會對檔案分割成一系列的 token，他需要確保檔案在進入下一個 stage(<em><strong>Grammer Parser</strong></em>)時，檔案內部的<strong>變數</strong>、<strong>保留字</strong>都應該符合規範，實際作法可以使用正則表達式(<em><strong>Regular Expression</strong></em>)去做檢查，常用工具：<a href="http://dinosaur.compilertools.net/">lex</a> flex</li>
+</ul>
+</li>
+</ul>
+<p>考慮以下程式碼</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>array[index]<span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">6</span>)    
+</span></span></code></pre></div><p>他會被分析成以下這些 token</p>
+<table>
+  <thead>
+      <tr>
+          <th>token</th>
+          <th>類型</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>array</td>
+          <td>標識符</td>
+      </tr>
+      <tr>
+          <td>[</td>
+          <td>左中括號</td>
+      </tr>
+      <tr>
+          <td>index</td>
+          <td>標識符</td>
+      </tr>
+      <tr>
+          <td>]</td>
+          <td>右中括號</td>
+      </tr>
+      <tr>
+          <td>=</td>
+          <td>賦值</td>
+      </tr>
+      <tr>
+          <td>(</td>
+          <td>左小括號</td>
+      </tr>
+      <tr>
+          <td>index</td>
+          <td>標識符</td>
+      </tr>
+      <tr>
+          <td>+</td>
+          <td>加號</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>數字</td>
+      </tr>
+      <tr>
+          <td>)</td>
+          <td>右小括號</td>
+      </tr>
+      <tr>
+          <td>*</td>
+          <td>乘號</td>
+      </tr>
+      <tr>
+          <td>(</td>
+          <td>左小括號</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>數字</td>
+      </tr>
+      <tr>
+          <td>+</td>
+          <td>加號</td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>數字</td>
+      </tr>
+      <tr>
+          <td>)</td>
+          <td>右小括號</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>語法分析(Grammer Parser)</li>
+</ul>
+<p>從上一個 stage 接收分析好的記號，並且進行語法分析，產生語法樹(Syntax Tree)，分析過程使用上下文無關語法(Context-free Grammer)的分析手段。產生的語法樹是由<code>表達式(Expression)</code> 為節點的樹。</p>
+<blockquote>
+<p>可以看到整個語句被看成賦值表達式(assign expression)，賦值<code>=</code>的左邊是一個數組表達式，右邊是一個乘法表達式，數組表達式又是由兩個符號表達式所組成的，符號和數字是最小的表達式，他們通常存在在整顆樹的(Leaf Node)，另外有些符號有多重含義譬如說 c 語言中的 <code>*</code>，有乘法以及取值(refence)的操作，那就需要在這個階段去分類好</p>
+</blockquote>
+<p>然後這裡也有一個工具叫做 yacc(yet another compiler compiler)</p>
+<p><img src="https://hackmd.io/_uploads/rkPcpU0wA.png" alt="image"></p>
+<ul>
+<li>
+<p>語意分析(Semantic Analyze)</p>
+<ul>
+<li>void funciton {return 2}</li>
+</ul>
+</li>
+<li>
+<p>產生中間代碼(Generate Middle Code)</p>
+<ul>
+<li>IR</li>
+<li>多平台開發 參見 LLVM</li>
+<li>消除語法糖之類的東西
+<ul>
+<li>方便最佳化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>最佳化代碼</p>
+</li>
+</ul>
+<blockquote>
+<p>好懶，隨便先寫一點</p>
+</blockquote>
+<h4 id="組譯assembly">組譯(<em>Assembly</em>)</h4>
+<ul>
+<li>可以一一對應，把組合語言轉換成機器看得懂的機器碼</li>
+</ul>
+<h3 id="連結linking">連結(Linking)</h3>
+<h4 id="連結器linker">連結器(<em>Linker</em>)</h4>
+<blockquote>
+<p>關於 Linker 最主要的功能就是把不同的　<code>.o file</code> 連結在一起，並且設定連結靜態庫 &amp; 動態庫</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/HkjtIoA60.png" alt="image"></p>
+<ul>
+<li>Static Linking
+<ul>
+<li>把 program 與 靜態連結庫整合在一起，變成一個可執行的 Binary File (Binary file include Library)</li>
+</ul>
+</li>
+<li>Dynamic Linking
+<ul>
+<li>把 program 與 動態連結庫整合在一起，變成一個可執行的 Binary File (Binary file not include Library)</li>
+</ul>
+</li>
+<li>Dynamic Linking? Dynamic Loading?</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/BkdUHs0pC.png" alt="image"></p>
+<h4 id="載入">載入</h4>
+<hr>
+<h3 id="參考資訊">參考資訊</h3>
+<ul>
+<li>
+<p>程序員的自我修養：鏈接、裝載與庫</p>
+</li>
+<li>
+<p><a href="https://www.bottomupcs.com/">Computer Science from the Bottom Up
+</a></p>
+</li>
+</ul>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+  
+</div>
+
+<section class="section py-0">
+  <div class="container has-text-centered">
+    <p></p>
+  </div>
+</section>
+

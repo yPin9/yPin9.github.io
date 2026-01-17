@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>idek CTF 2024 | yiπng</title>
+
+<link rel="stylesheet" href="http://localhost:1313//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-minima.css" />
+<script type="text/javascript" src="http://localhost:1313//js/jssocials.js"></script>
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="http://localhost:1313/"><h1 class="title is-3">yiπng</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="http://localhost:1313/about" rel="me">
+                  <span class="icon">
+                    <i class="fas fa-info"></i>
+                  </span>
+                </a>
+              
+                <a href="https://github.com/yPin9" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://x.com/ypp_tw" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">August 21, 2024</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">idek CTF 2024</h1>
+  <div class="content">
+    <p>剛好看到同學說有報名 idek CTF，想說就去玩玩看，最後只解了兩題</p>
+<blockquote>
+<p>一題reverse 一題 misc 都是簡單的題目</p>
+</blockquote>
+<p>可以看到敘述，分數最高的 player 可以獲得 flag，很明顯我們的目標會在 score 之類的地方
+<img src="../../idek_img/image.png" alt="alt text"></p>
+<p>解包解壓縮後可以看到有這些東西， <code>.exe</code>，確定遊戲是跑在 windows 底下的</p>
+<p><img src="../../idek_img/dir.png" alt="alt text"></p>
+<p>打開遊戲，可以發現就是 chrome 離線時的小遊戲，玩法一樣</p>
+<blockquote>
+<p>這遊戲的音樂很大聲</p>
+</blockquote>
+<p><img src="../../idek_img/game_dis.png" alt="alt text"></p>
+<p>其實解題思路在這邊就很清晰了，我們要達到高分，那不免俗可能需要 cheat engine 的幫助，這邊有兩個可以嘗試的目標，所謂的高分是指</p>
+<ul>
+<li>
+<p>歷史最高分高到足夠可以得到 <code>flag</code></p>
+</li>
+<li>
+<p>目前的分數高到足夠可以得到 <code>flag</code></p>
+</li>
+</ul>
+<p>後來我用 cheat engine 找到存放最高分數的位置，修改後沒有得到 <code>flag</code></p>
+<blockquote>
+<p>情理之中，歷史最高分 &gt; 某個數字就可以拿到 flag 的邏輯還是怪怪的</p>
+</blockquote>
+<p>所以應該是 <strong>目前的分數高到足夠可以得到 <code>flag</code></strong>，我一樣去分析但其實找不太到存在<strong>當前</strong>分數的地方，不確定是不是故意設計成這樣，後來放棄分析主程式跑去看有什麼其當的檔案就真的看到有趣的東西了 <code>spritesheet.json</code></p>
+<pre><code>{
+&quot;ground_0&quot;: {&quot;x&quot;: 2, &quot;y&quot;: 54, &quot;width&quot;: 600, &quot;height&quot;: 12},
+&quot;ground_1&quot;: {&quot;x&quot;: 602, &quot;y&quot;: 54, &quot;width&quot;: 600, &quot;height&quot;: 12},
+&quot;restart_button&quot;: {&quot;x&quot;: 2, &quot;y&quot;: 2, &quot;width&quot;: 36, &quot;height&quot;: 32},
+&quot;restart_text&quot;: {&quot;x&quot;: 655, &quot;y&quot;: 15, &quot;width&quot;: 191, &quot;height&quot;: 11},
+&quot;cloud&quot;: {&quot;x&quot;: 86, &quot;y&quot;: 2, &quot;width&quot;: 46, &quot;height&quot;: 14},
+&quot;char_0&quot;: {&quot;x&quot;: 655, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_1&quot;: {&quot;x&quot;: 665, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_2&quot;: {&quot;x&quot;: 675, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_3&quot;: {&quot;x&quot;: 685, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_4&quot;: {&quot;x&quot;: 695, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_5&quot;: {&quot;x&quot;: 705, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_6&quot;: {&quot;x&quot;: 715, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_7&quot;: {&quot;x&quot;: 725, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_8&quot;: {&quot;x&quot;: 735, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_9&quot;: {&quot;x&quot;: 745, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_h&quot;: {&quot;x&quot;: 755, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11},
+&quot;char_i&quot;: {&quot;x&quot;: 765, &quot;y&quot;: 2, &quot;width&quot;: 9, &quot;height&quot;: 11}, 
+&quot;trex_crashed&quot;: {&quot;x&quot;: 1024, &quot;y&quot;: 2, &quot;width&quot;: 44, &quot;height&quot;: 47},
+&quot;trex_idle_0&quot;: {
+    &quot;x&quot;: 848,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 44,
+    &quot;height&quot;: 47,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 1, &quot;y&quot;: 18, &quot;width&quot;: 30, &quot;height&quot;: 9},
+        {&quot;x&quot;: 1, &quot;y&quot;: 24, &quot;width&quot;: 29, &quot;height&quot;: 5},
+        {&quot;x&quot;: 10, &quot;y&quot;: 35, &quot;width&quot;: 14, &quot;height&quot;: 8},
+        {&quot;x&quot;: 22, &quot;y&quot;: 0, &quot;width&quot;: 18, &quot;height&quot;: 16},
+        {&quot;x&quot;: 5, &quot;y&quot;: 30, &quot;width&quot;: 21, &quot;height&quot;: 4},
+        {&quot;x&quot;: 9, &quot;y&quot;: 34, &quot;width&quot;: 15, &quot;height&quot;: 4}
+    ]
+},
+&quot;trex_blink_0&quot;: {
+    &quot;x&quot;: 892,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 44,
+    &quot;height&quot;: 47
+},
+&quot;trex_running_0&quot;: {
+    &quot;x&quot;: 936,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 44,
+    &quot;height&quot;: 47,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 1, &quot;y&quot;: 18, &quot;width&quot;: 30, &quot;height&quot;: 9},
+        {&quot;x&quot;: 1, &quot;y&quot;: 24, &quot;width&quot;: 29, &quot;height&quot;: 5},
+        {&quot;x&quot;: 10, &quot;y&quot;: 35, &quot;width&quot;: 14, &quot;height&quot;: 8},
+        {&quot;x&quot;: 22, &quot;y&quot;: 0, &quot;width&quot;: 18, &quot;height&quot;: 16},
+        {&quot;x&quot;: 5, &quot;y&quot;: 30, &quot;width&quot;: 21, &quot;height&quot;: 4},
+        {&quot;x&quot;: 9, &quot;y&quot;: 34, &quot;width&quot;: 15, &quot;height&quot;: 4}
+    ]
+},
+&quot;trex_running_1&quot;: {
+    &quot;x&quot;: 980,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 44,
+    &quot;height&quot;: 47,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 1, &quot;y&quot;: 18, &quot;width&quot;: 30, &quot;height&quot;: 9},
+        {&quot;x&quot;: 1, &quot;y&quot;: 24, &quot;width&quot;: 29, &quot;height&quot;: 5},
+        {&quot;x&quot;: 10, &quot;y&quot;: 35, &quot;width&quot;: 14, &quot;height&quot;: 8},
+        {&quot;x&quot;: 22, &quot;y&quot;: 0, &quot;width&quot;: 18, &quot;height&quot;: 16},
+        {&quot;x&quot;: 5, &quot;y&quot;: 30, &quot;width&quot;: 21, &quot;height&quot;: 4},
+        {&quot;x&quot;: 9, &quot;y&quot;: 34, &quot;width&quot;: 15, &quot;height&quot;: 4}
+    ]
+},
+&quot;trex_ducking_0&quot;: {
+    &quot;x&quot;: 1112,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 59,
+    &quot;height&quot;: 47,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 1, &quot;y&quot;: 18, &quot;width&quot;: 55, &quot;height&quot;: 25}
+    ]
+},
+&quot;trex_ducking_1&quot;: {
+    &quot;x&quot;: 1171,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 59,
+    &quot;height&quot;: 47,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 1, &quot;y&quot;: 18, &quot;width&quot;: 55, &quot;height&quot;: 25}
+    ]
+},
+&quot;obstacle_small_0&quot;: {
+    &quot;x&quot;: 228,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 17,
+    &quot;height&quot;: 35,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 7, &quot;width&quot;: 5, &quot;height&quot;: 27},
+        {&quot;x&quot;: 4, &quot;y&quot;: 0, &quot;width&quot;: 6, &quot;height&quot;: 34},
+        {&quot;x&quot;: 10, &quot;y&quot;: 4, &quot;width&quot;: 7, &quot;height&quot;: 14}
+    ]
+},
+&quot;obstacle_small_1&quot;: {
+    &quot;x&quot;: 245,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 34,
+    &quot;height&quot;: 35,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 7, &quot;width&quot;: 5, &quot;height&quot;: 27},
+        {&quot;x&quot;: 4, &quot;y&quot;: 0, &quot;width&quot;: 22, &quot;height&quot;: 34},
+        {&quot;x&quot;: 27, &quot;y&quot;: 4, &quot;width&quot;: 7, &quot;height&quot;: 14}
+    ]
+},
+&quot;obstacle_small_2&quot;: {
+    &quot;x&quot;: 279,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 51,
+    &quot;height&quot;: 35,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 7, &quot;width&quot;: 5, &quot;height&quot;: 27},
+        {&quot;x&quot;: 4, &quot;y&quot;: 0, &quot;width&quot;: 39, &quot;height&quot;: 34},
+        {&quot;x&quot;: 44, &quot;y&quot;: 4, &quot;width&quot;: 7, &quot;height&quot;: 14}
+    ]
+},
+&quot;obstacle_large_0&quot;: {
+    &quot;x&quot;: 332,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 25,
+    &quot;height&quot;: 50,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 12, &quot;width&quot;: 7, &quot;height&quot;: 38},
+        {&quot;x&quot;: 8, &quot;y&quot;: 0, &quot;width&quot;: 7, &quot;height&quot;: 49},
+        {&quot;x&quot;: 13, &quot;y&quot;: 10, &quot;width&quot;: 10, &quot;height&quot;: 38}
+    ]
+},
+&quot;obstacle_large_1&quot;: {
+    &quot;x&quot;: 357,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 50,
+    &quot;height&quot;: 50,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 12, &quot;width&quot;: 7, &quot;height&quot;: 38},
+        {&quot;x&quot;: 8, &quot;y&quot;: 0, &quot;width&quot;: 33, &quot;height&quot;: 49},
+        {&quot;x&quot;: 40, &quot;y&quot;: 10, &quot;width&quot;: 10, &quot;height&quot;: 38}
+    ]
+},
+&quot;obstacle_large_2&quot;: {
+    &quot;x&quot;: 407,
+    &quot;y&quot;: 2,
+    &quot;width&quot;: 75,
+    &quot;height&quot;: 50,
+    &quot;collision&quot;: [
+        {&quot;x&quot;: 0, &quot;y&quot;: 12, &quot;width&quot;: 7, &quot;height&quot;: 38},
+        {&quot;x&quot;: 8, &quot;y&quot;: 0, &quot;width&quot;: 58, &quot;height&quot;: 49},
+        {&quot;x&quot;: 65, &quot;y&quot;: 10, &quot;width&quot;: 10, &quot;height&quot;: 38}
+    ]
+}
+</code></pre>
+<p>他記錄了整個遊戲角色、障礙物的座標以及大小，答案呼之欲出了，這邊我們只要把所有障礙物的 <code>width</code> &amp; <code>height</code> 修改成0就可以跑在乾淨的道路上了</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+  
+</div>
+
+<section class="section py-0">
+  <div class="container has-text-centered">
+    <p></p>
+  </div>
+</section>
+
