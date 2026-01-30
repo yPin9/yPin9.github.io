@@ -11,14 +11,23 @@ tags: CTF
 
 ## Register
 
-> 在 Binary exploitation　中，Register 扮演相當重要的角色，因為他是我們 CPU 能直接/快速存取的硬體，幾乎所有的 Instruction 都是在對 Register 做操作
+> 在 Binary exploitation　中，Register 扮演相當重要的角色，因為他是我們 *CPU* 能直接/快速存取的硬體，大部分的 *Instruction* 都是在對 *Register* 做操作
 
 
-![1726857536036](https://hackmd.io/_uploads/HkG0bHjTC.png)
+#### 先來理解 *Register* 的命名規則
+
+* *x64*
+    * *rax*, *rbx*, *rcx*, *rdx*,*rsi*, *rdi*, *r8*, *r9*, *r10*, *r11*, *r12*, *r13*,*r14*,*r15*,*rsp*,*rbp*
+    * *r* 在這邊代表的是***64bits***
+
+* *x86* 
+    * *eax*, *rbx*, *ecx*, *edx*, *esi*, *edi*, *esp*, *ebp*
+    * *e* 在這邊代表的是 ***32bits***
+
+> 並且 ***x64*** 的機器可以使用 *e* 開頭的 *Register*
 
 
-
-![image](https://hackmd.io/_uploads/rkOOjRjPA.png)
+#### 下面的圖清楚的介紹 *rax*,*eax*,*ah*,*al* 關係
 
 ```c
 8Bytes |----------------RAX----------------|
@@ -27,14 +36,14 @@ tags: CTF
 1Bytes                   |---AH---|---AL---|
 ```
 
-* 以 `$RAX` 系列為例，`$EAX` 是 `$RAX` 的右半4Bytes
-    *  我們依序執行 `$RAX = 0;` `$EAX= 1;` 執行後 `$RAX` 就會是1
+* 以 ***$RAX*** 系列為例，***$EAX*** 是 ***$RAX*** 的右半4Bytes
+    *  我們依序執行 ***$RAX = 0;*** ***$EAX= 1;*** 執行後 ***$RAX*** 就會是1
 
 ---
 
-* $RSP ----> `s` means `stack` is point to the top of the stack
-* $RBP ----> `b` means `base` is point to the botton of the stack
-* $RIP ----> `i` means `instrustion` is point to the current execution's instruction
+* ***$RSP*** ----> ***s*** means ***stack*** is point to the top of the stack
+* ***$RBP*** ----> ***b*** means ***base*** is point to the botton of the stack
+* ***$RIP*** ----> ***i*** means ***instrustion*** is point to the current execution's instruction
 
 > 在暫存器的使用會有一些習慣
 

