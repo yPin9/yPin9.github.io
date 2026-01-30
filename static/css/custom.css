@@ -1,0 +1,196 @@
+/* 不碰 Bulma content */
+.notes>p {
+    margin-inline-start: 0;
+}
+
+/* notes 首段首字放大，不縮排 */
+.notes>p:first-of-type {
+    margin-inline-start: 0;
+    /* 取消 Bulma 段落縮排 */
+}
+
+.notes>p:first-of-type::first-letter {
+    float: left;
+    font-size: 3.5em;
+    line-height: 1;
+    margin-right: 0.1em;
+    font-weight: 600;
+}
+
+/* notes 後面段落縮排兩個中文字寬度 */
+.notes>p:not(:first-of-type) {
+    text-indent: 2em;
+    /* 中文段落縮排兩個字元寬 */
+}
+
+body blockquote {
+    position: relative !important;
+    margin: 2em 1.2em !important;
+    padding: 1.2em 1.6em !important;
+
+    border-left: 4px solid #8b6a3e !important; /* 深土棕左線 */
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+
+    background-color: rgba(139, 106, 62, 0.08) !important; /* 土黃色淡底 */
+    border-radius: 4px !important;
+
+    color: #3b2f1f !important; /* 深棕字色 */
+    line-height: 1.6 !important;
+    font-style:italic !important;
+
+    box-shadow: 0 2px 6px rgba(59, 47, 31, 0.08) !important;
+}
+
+
+
+/* 有些主題會對 blockquote 內的 p 標籤設樣式，這也需要覆蓋 */
+body blockquote p {
+    color: #000000 !important;
+    font-style: italic !important;
+    margin: 0 !important;
+}
+
+.quote {
+    position: relative;
+    padding: 1em 1.5em;        /* 左右留空間給線 */
+    margin: 2em auto;
+    font-style: italic;
+    font-size: 1.2em;
+    line-height:0.001;
+
+    /* 左右線模擬「引用」感 */
+    /*border-left: 4px solid black;*/
+    
+    background-color: transparent;  /* 不要背景 */
+    
+    user-select: text;
+
+    text-align: center;   
+}
+
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   Carbon Style Code Block for Hugo
+   ============================================================ */
+
+/* 1. 外層容器：大圓角、深色背景與質感陰影 */
+.highlight {
+    position: relative !important;
+    background-color: #282c34 !important; /* 請確保與你的 Chroma Style 背景色一致 */
+    border-radius: 12px !important;
+    margin: 2em 0 !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden !important;
+    padding-top: 35px !important; /* 為上方小圓點留空間 */
+}
+
+/* 2. Carbon 經典紅黃綠小圓點 */
+.highlight::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    height: 12px;
+    width: 60px;
+    /* 繪製三個圓點 */
+    background: radial-gradient(circle, #ff5f56 5px, transparent 5px) 0px 0px,
+                radial-gradient(circle, #ffbd2e 5px, transparent 5px) 20px 0px,
+                radial-gradient(circle, #27c93f 5px, transparent 5px) 40px 0px;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+/* 3. 核心滾動機制：讓代碼可以向右滑動 */
+.highlight .chroma {
+    display: block !important;
+    overflow-x: auto !important; /* 產生水平滑桿 */
+    width: 100% !important;
+    background-color: transparent !important;
+}
+
+/* 4. 表格佈局修正：解決行號被壓縮與斷開感 */
+.highlight table {
+    display: table !important;
+    width: auto !important;       /* 寬度隨內容伸展 */
+    min-width: 100% !important;   /* 至少撐滿容器 */
+    table-layout: auto !important; /* 自動計算欄位寬度，不鎖死 */
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* 5. 行號欄位樣式 */
+.lntd:first-child {
+    width: auto !important;
+    min-width: 3.5em !important;  /* 確保三位數行號不會被切掉 */
+    background-color: rgba(0, 0, 0, 0.2) !important; /* 行號區塊深色背景 */
+    padding: 10px 15px !important;
+    text-align: right !important;
+    vertical-align: top !important;
+    user-select: none !important;
+    border: none !important;
+}
+
+/* 6. 代碼本文欄位樣式 */
+.lntd:last-child {
+    padding: 10px 20px !important;
+    vertical-align: top !important;
+    white-space: pre !important;  /* 強制不換行，代碼才會往右延伸 */
+    border: none !important;
+}
+
+/* 7. 行號與代碼文字美化 */
+.ln {
+    color: #636d83 !important;
+    font-size: 0.85em !important;
+    font-family: "JetBrains Mono", Consolas, monospace !important;
+}
+
+.highlight code {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
+    line-height: 1.6 !important;
+    font-size: 0.9em !important;
+    background: transparent !important;
+}
+
+/* 8. 自定義滑桿樣式 (讓它更有質感) */
+.highlight .chroma::-webkit-scrollbar {
+    height: 8px;
+}
+
+.highlight .chroma::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.highlight .chroma::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.highlight .chroma::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+
+.highlight::before {
+    content: "";
+    display: block;
+    height: 12px;
+    width: 100%;
+    background: radial-gradient(circle at 12px 12px, #ff5f56 6px, transparent 6px),
+                radial-gradient(circle at 32px 12px, #ffbd2e 6px, transparent 6px),
+                radial-gradient(circle at 52px 12px, #27c93f 6px, transparent 6px);
+    background-repeat: no-repeat;
+    background-color: #282c34; /* 標題列顏色 */
+    padding: 24px 0 0 15px;
+}

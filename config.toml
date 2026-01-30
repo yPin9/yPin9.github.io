@@ -1,0 +1,50 @@
+baseurl = "https://yPin9.github.io"
+languageCode = "en"
+title = "yiπng"
+theme = "charaka"
+disqusShortname = ""
+relativeURLs = true
+preserveTaxonomyNames = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+    [markup.goldmark.extensions]
+      table = true
+      strikethrough = true
+      linkify = true
+
+  [markup.highlight]
+    lineNos = true
+    lineNumbersInTable = true  # 必須為 true 才能套用上面的表格美化
+    noClasses = true           # 直接輸出樣式
+    style = "dracula"          # 推薦 dracula 或 monokai 很有 Carbon 感
+
+[services.googleAnalytics]
+googleAnalytics = ""
+
+
+[author]
+  name = "yiπng"
+  homepage = "https://yPin9.github.io"
+
+[permalinks]
+  posts = ":slug/"
+
+[params.share]
+  enabled = "false"
+
+[[params.social]]
+  url = "about"
+  fa_icon = "fas fa-info"
+
+[[params.social]]
+  url = "https://github.com/yPin9"
+  fa_icon = "fab fa-github"
+
+
+[[params.social]]
+  url = "https://x.com/ypp_tw"
+  fa_icon = "fa-brands fa-x-twitter"
