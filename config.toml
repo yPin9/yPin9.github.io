@@ -25,6 +25,10 @@ preserveTaxonomyNames = true
 [services.googleAnalytics]
 googleAnalytics = ""
 
+[build]
+  buildFuture = true
+  buildDrafts = false
+  buildExpired = false
 
 [author]
   name = "yiπng"
