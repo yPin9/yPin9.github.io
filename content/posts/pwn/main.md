@@ -748,6 +748,17 @@ Ret2libc = leak libc base address + ROP
 
 > 一直忘記
 
-```c=
+```c
 readelf -s libc.so.6 | grep <function>
+```
+
+```c
+patchelf --set-rpath . <binary>
+patchelf --set-interpreter ./ld-linux-x86-64.so.2 <binary>
+```
+
+check ld
+
+```
+readelf -l average | grep interpreter
 ```
