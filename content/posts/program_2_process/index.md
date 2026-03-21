@@ -221,6 +221,13 @@ array[index]= (index + 4) * (2 + 6)
 
 ![image](https://hackmd.io/_uploads/BkdUHs0pC.png)
 
+> 連結器又分動態連結器以及靜態連結器?
+
+ * 靜態連結器
+
+
+ * 動態連結器
+
 
 
 

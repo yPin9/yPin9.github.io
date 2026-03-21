@@ -296,7 +296,7 @@ handle SIGINT stop print pass
 當程序接收到 SIGINT 信號時，GDB 會：
 
 * 暫停程序（stop）
-* 打印收到信號的消息（print）
+* 顯示收到信號的消息（print）
 * 將信號傳遞給程序（pass）
 
 ## Reference
