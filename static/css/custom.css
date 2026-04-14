@@ -76,6 +76,97 @@ img {
     margin: 0 auto;
 }
 
+.post-shell {
+    max-width: 100%;
+}
+
+.post-layout {
+    width: 100%;
+    margin: 0;
+}
+
+.post-header,
+.post-content {
+    width: 100%;
+}
+
+.post-content {
+    position: relative;
+}
+
+.sidenote {
+    margin: 1.25rem 0;
+    padding: 0.9rem 1rem;
+    border-left: 3px solid #cabda5;
+    background-color: #f7f1e7;
+    color: #5f4a31;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.sidenote-title {
+    margin: 0 0 0.45rem 0 !important;
+    color: #760411;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.sidenote-body > :last-child {
+    margin-bottom: 0 !important;
+}
+
+@media screen and (min-width: 900px) {
+    .sidenote {
+        float: right;
+        clear: right;
+        width: 14rem;
+        margin: 0.35rem -16.5rem 1.25rem 1.5rem;
+    }
+}
+
+.post-tag-inline {
+    margin-left: 0.65rem !important;
+    display: inline-block !important;
+    padding: 0.16rem 0.5rem !important;
+    border-radius: 0.2rem !important;
+    border: 1px solid rgba(118, 4, 17, 0.18) !important;
+    background-color: #f3e2d2 !important;
+    color: #760411 !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2 !important;
+    vertical-align: middle !important;
+    text-transform: uppercase !important;
+}
+
+.post-tag-ctf {
+    background-color: #f7d9dc !important;
+    border-color: #e7aab1 !important;
+    color: #8a1c2a !important;
+}
+
+.post-tag-cs {
+    background-color: #dceeff !important;
+    border-color: #a9cbed !important;
+    color: #184f8c !important;
+}
+
+.post-tag-notes {
+    background-color: #e7dfcf !important;
+    border-color: #cabda5 !important;
+    color: #6e5631 !important;
+}
+
+.post-tag-compiler {
+    background-color: #e1d9f6 !important;
+    border-color: #c0b0eb !important;
+    color: #5c3e99 !important;
+}
+
+
 /* ============================================================
    Carbon Style Code Block for Hugo
    ============================================================ */

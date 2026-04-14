@@ -1,0 +1,8 @@
+<aside class="sidenote">
+  {{ with .Get "title" }}
+  <p class="sidenote-title">{{ . }}</p>
+  {{ end }}
+  <div class="sidenote-body">
+    {{ .Inner | markdownify }}
+  </div>
+</aside>

@@ -9,17 +9,3 @@ menu = "main"
 
 
 
-
-### CTF
-- 2025 AIS3 pre-exam: 45/344 (13%)
-- 2025 DEFCONCTF qual: 31/195 (15%)
-- 2025 DawgCTF: 223/760 (29%)
-- 2025 picoCTF: 305/10460 (2.9%)
-- 2025 TSC CTF: 51/509 (10%)
-
-### Community
-- 2025 AIS3 學員
-- 2025 AIS3 好厲駭 學員
-- 2025 HITCON 志工
-
-

@@ -1,7 +1,7 @@
 ---
 title: LLVM IR
 date: 2026-03-20
-tags: notes
+tags: CS
 ---
 
 # LLVM IR 詳細介紹
