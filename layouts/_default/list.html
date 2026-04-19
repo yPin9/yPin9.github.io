@@ -15,7 +15,7 @@
         <div class="column">
           <h2 class="subtitle is-inline is-size-4-mobile is-size-3-desktop">
             <a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}
-            {{ with .Params.tags }}<span class="post-tag-inline post-tag-{{ . | lower | urlize }}">{{ . }}</span>{{ end }}
+            {{ range .GetTerms "tags" }}<span class="post-tag-inline post-tag-{{ .Title | lower | urlize }}">{{ .Title }}</span>{{ end }}
           </h2>
         </div>
       </article>

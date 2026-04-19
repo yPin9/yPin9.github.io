@@ -271,3 +271,87 @@ img {
     background-color: #282c34; /* 標題列顏色 */
     padding: 24px 0 0 15px;
 }
+
+/* Tag filter (clickable sidebar tags on home page) */
+.post-item[hidden],
+.year-group[hidden] {
+    display: none !important;
+}
+
+@media screen and (min-width: 988px) {
+    .home-layout {
+        grid-template-columns: minmax(0, 1fr) 170px !important;
+    }
+}
+
+.taxonomy-panel {
+    padding: 1rem 0.85rem;
+}
+
+.taxonomy-group .taxonomy-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+}
+
+.taxonomy-chip-tag {
+    cursor: pointer;
+    user-select: none;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+}
+
+.taxonomy-chip-tag.is-active {
+    background-color: #a14b7b;
+    border-color: #a14b7b;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(161, 75, 123, 0.3);
+}
+
+.taxonomy-chip-tag.is-active .taxonomy-count {
+    background-color: rgba(255, 255, 255, 0.22);
+    color: #fff;
+}
+
+.taxonomy-chip-tag.is-active:hover {
+    color: #fff;
+    border-color: #a14b7b;
+    background-color: #a14b7b;
+}
+
+.taxonomy-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.taxonomy-group-header .taxonomy-title {
+    margin: 0;
+}
+
+.taxonomy-clear {
+    border: none;
+    background: none;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    color: #a14b7b;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.taxonomy-clear:hover {
+    text-decoration: underline;
+}
+
+.tag-filter-empty {
+    padding: 2rem 0;
+    text-align: center;
+    color: #8a6a5a;
+    font-style: italic;
+}
+
