@@ -76,20 +76,6 @@ img {
     margin: 0 auto;
 }
 
-.post-shell {
-    max-width: 100%;
-}
-
-.post-layout {
-    width: 100%;
-    margin: 0;
-}
-
-.post-header,
-.post-content {
-    width: 100%;
-}
-
 .post-content {
     position: relative;
 }
