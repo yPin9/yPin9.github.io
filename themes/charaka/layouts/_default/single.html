@@ -1,0 +1,44 @@
+{{ partial "header" . }}
+{{ partial "nav" . }}
+
+<div class="container single-layout">
+  <div class="single-main">
+    <h2 class="subtitle is-6">{{ .Date.Format "January 2, 2006" }}</h2>
+    <h1 class="subtitle is-size-4-mobile is-size-3-desktop">{{ .Title }}</h1>
+    <div class="content{{ if in .Params.tags "notes" }} notes{{ end }}">
+      {{ .Content }}
+    </div>
+  </div>
+
+  {{ $categories := .Params.categories }}
+  {{ $tags := .Params.tags }}
+  {{ if or $categories $tags }}
+  <aside class="single-sidebar" aria-label="Post metadata">
+    <div class="taxonomy-panel">
+      {{ with $categories }}
+      <section class="taxonomy-group">
+        <h3 class="taxonomy-title">Categories</h3>
+        <div class="taxonomy-list">
+          {{ range . }}
+          <a class="taxonomy-chip taxonomy-chip-category" href="{{ (printf "/categories/%s/" (. | urlize)) | relURL }}">{{ . }}</a>
+          {{ end }}
+        </div>
+      </section>
+      {{ end }}
+
+      {{ with $tags }}
+      <section class="taxonomy-group">
+        <h3 class="taxonomy-title">Tags</h3>
+        <div class="taxonomy-list">
+          {{ range . }}
+          <a class="taxonomy-chip taxonomy-chip-tag" href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">{{ . }}</a>
+          {{ end }}
+        </div>
+      </section>
+      {{ end }}
+    </div>
+  </aside>
+  {{ end }}
+</div>
+{{ partial "jsshare" . }}
+{{ partial "disqus" . }}
