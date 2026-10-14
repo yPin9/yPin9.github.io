@@ -11,6 +11,6 @@ menu = "main"
 ---
  
 
-這裡主要是當我的雲端垃圾桶，塞一些沒用的東西。你可以透過這個信箱聯繫到我: [ypp0x7@gmail.com](https://mail.google.com/mail/?view=cm&to=ypp0x7@gmail.com)
+你可以透過這個信箱聯繫到我: [ypp0x7@gmail.com](https://mail.google.com/mail/?view=cm&to=ypp0x7@gmail.com)
 
 
