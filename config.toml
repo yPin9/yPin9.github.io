@@ -1,5 +1,5 @@
 baseurl = "https://yPin9.github.io"
-languageCode = "en"
+defaultContentLanguage = "zh-tw"
 title = "λ66"
 theme = "charaka"
 disqusShortname = ""
@@ -52,3 +52,22 @@ googleAnalytics = ""
 [[params.social]]
   url = "https://x.com/ypp_tw"
   fa_icon = "fa-brands fa-x-twitter"
+
+# 左上角 logo：ascii-scribe（只吃 printable ASCII）
+[params.logo]
+  strings = ["yPin9"]
+  font = "Small Slant"
+  speed = 70
+  pause = 2500
+  loop = false
+
+# 多語系：中文為預設（網址不變），英文在 /en/ 底下；目前只有 about 有英文版
+[languages]
+  [languages.zh-tw]
+    languageCode = "zh-TW"
+    languageName = "中文"
+    weight = 1
+  [languages.en]
+    languageCode = "en"
+    languageName = "EN"
+    weight = 2
