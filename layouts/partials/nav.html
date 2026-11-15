@@ -1,10 +1,48 @@
 <div class="container">
     <nav class="navbar level">
       <div class="navbar-brand">
-          <a class="nav-item" href="{{ .Site.BaseURL }}"><h1 class="title is-3">{{ .Site.Title }}</h1></a>
+          <a class="nav-item site-logo" href="{{ .Site.BaseURL }}">
+            <h1 class="title is-3 visually-hidden">{{ .Site.Title }}</h1>
+            {{ with .Site.Params.logo }}
+            <ascii-scribe class="site-logo-art"
+              strings='{{ .strings | jsonify }}'
+              font="{{ .font | default "Standard" }}"
+              speed="{{ .speed | default 70 }}"
+              pause="{{ .pause | default 2500 }}"
+              loop="{{ .loop | default true }}"></ascii-scribe>
+            {{ end }}
+          </a>
       </div>           
       <div class="navbar-menu has-text-centered is-active">
           <div class="navbar-end is-centered">
+              {{/* 只在有翻譯的「內容頁」顯示；首頁、tags 等列表頁在 /en/ 底下是空的，不顯示 */}}
+              {{ if and .IsPage .IsTranslated }}
+              {{/* 兩個語言的滑動切換：整顆是一個連結，指向另一個語言；滑塊位置 = 目前語言的順序 */}}
+              {{ $active := 0 }}{{ $target := "" }}
+              {{ range $i, $t := .AllTranslations }}
+                {{ if eq $t.Lang $.Lang }}{{ $active = $i }}{{ else }}{{ $target = $t }}{{ end }}
+              {{ end }}
+              <a class="lang-toggle" href="{{ $target.RelPermalink }}" data-active="{{ $active }}"
+                 hreflang="{{ $target.Language.LanguageCode }}"
+                 aria-label="{{ if eq $target.Lang "en" }}Switch to English{{ else }}切換為中文{{ end }}">
+                <span class="lang-toggle-thumb" aria-hidden="true"></span>
+                {{ range $i, $t := .AllTranslations }}
+                <span class="lang-toggle-label{{ if eq $i $active }} is-active{{ end }}" aria-hidden="true">{{ $t.Language.LanguageName }}</span>
+                {{ end }}
+              </a>
+              <script>
+                document.querySelectorAll('.lang-toggle').forEach(function (el) {
+                  el.addEventListener('click', function (e) {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                    e.preventDefault();
+                    el.dataset.active = el.dataset.active === '0' ? '1' : '0';
+                    el.querySelectorAll('.lang-toggle-label').forEach(function (l) { l.classList.toggle('is-active'); });
+                    setTimeout(function () { location.href = el.href; }, 220);
+                  });
+                });
+              </script>
+              {{ end }}
               {{ range .Site.Params.social }}
                 <a href="{{ .url | absURL }}" rel="me">
                   <span class="icon">
